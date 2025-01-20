@@ -46,7 +46,8 @@ class ContactRequest extends FormRequest
             'tel.max:5' => '電話番号は5桁までの数字で入力してください',
             'address.required' => '住所を入力してください',
             'building.required' => '建物名を入力してください',
-            'detail.required' => 'お問い合わせの内容を入力してください', 
+            'detail.required' => 'お問い合わせ内容を入力してください', 
+            'detail.max:20' => 'お問い合わせ内容は120文字以内で入力してください',
         ];
     }
 }

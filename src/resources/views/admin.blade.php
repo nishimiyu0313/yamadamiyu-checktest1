@@ -8,6 +8,9 @@
 
 
 <div class="admin__content">
+    <div class="admin-form__heading">
+        <h2>admin</h2>
+    </div>
     <form class="search-form" action="/admin/search" method="get">
         @csrf
         <div class="search-form__item">
@@ -27,8 +30,9 @@
                 <option value="ショップへのお問い合わせ">ショップへのお問い合わせ</option>
                 <option value="その他">その他</option>
             </select>
-            <select class="search-form__item-date" name="Category_date">
-                <option value="">年/月/日</option>
+            <form>
+                <input type="date" name='date'>
+            </form>
             </select>
             <div class="search-form__button">
                 <button class="search-form__button-submit" type="submit">検索</button>
@@ -39,6 +43,7 @@
             <div class="search-form__button">
                 <button class="search-form__button-export" type="submit">エクスポート</button>
             </div>
+
             <div class="category-table">
                 <table class="category-table__inner"></table>
                 <tr class=" category-table__row">

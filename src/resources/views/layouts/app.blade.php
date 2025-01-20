@@ -18,8 +18,12 @@
                 <a class="header__logo">
                     FashionablyLate
                 </a>
+                <div class="form__button">
+                    <button class="form__button-submit" type="submit">logout</button>
+                </div>
             </div>
         </div>
+
     </header>
 
     <main>

@@ -43,7 +43,7 @@
   padding: 4px 6px;
   border-radius: 3px;
   background: #fafafa;
-  color: #aaa;
+  color: #ff0000;
 }
 
 .form__error {
@@ -80,7 +80,7 @@
   height: 40px;
   border: none;
   border-radius: 3px;
-  background: #ddd;
-  color: #ad8787;
+  background: #564040;
+  color: #fff;
   cursor: pointer;
 }

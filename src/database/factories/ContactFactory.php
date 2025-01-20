@@ -15,6 +15,7 @@ class ContactFactory extends Factory
     public function definition()
     {
         return [
+            'category_id' => '1',
             'last_name' => '山田',
             'first_name' => '太郎',
             'gender' => '1',

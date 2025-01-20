@@ -33,7 +33,7 @@ DBのテーブルにダミーデータを投入
 ディレクトリ/ファイルの権限を変更
 6 sudo chmod -R 777 src/storage
 ```
-##　使用技術
+## 使用技術
 ```
 ・PHP8.0
 ・laravel 10.0
@@ -44,6 +44,7 @@ DBのテーブルにダミーデータを投入
 ```
 ・環境構築：http://localhost/
 ・phpMyAdmin:http://localhost:8080/
+```
 
 ## ER図
 ![ER図](ER.png)

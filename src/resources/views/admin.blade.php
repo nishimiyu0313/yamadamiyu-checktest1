@@ -1,109 +1,137 @@
 @extends('layouts.app')
 
-@section('css')
-<link rel="stylesheet" href="{{ asset('css/index.css') }}">
-@endsection
+@section('title', 'find.blade.php')
 
 @section('content')
 
 
-<div class="admin__content">
-    <div class="admin-form__heading">
-        <h2>admin</h2>
-    </div>
-    <form class="search-form" action="/admin/search" method="get">
-        @csrf
-        <div class="search-form__item">
-            <input class="search-form__item-input" type="text" name="keyword" value="{{ old('keyword') }}">
-            <select class="search-form__item-gender" name="Category_gender">
-                <option value="">性別</option>
-                <option value="男性">男性</option>
-                <option value="女性">女性</option>
-                <option value="その他">その他</option>
+<div class="admin">
+    <h2 class="admin__heading content__heading">Admin</h2>
+    <div class="admin__inner">
+        <form class="search-form" action="/search" method="get">
+            @csrf
+            <input class="search-form__keyword-input" type="text" name="keyword" placeholder="名前やメールアドレスを入力してください" value="{{request('keyword')}}">
+            <div class="search-form__gender">
+                <select class="search-form__gender-select" name="gender" value="{{request('gender')}}">
+                    <option disabled selected>性別</option>
+                    <option value="1" @if( request('gender')==1 ) selected @endif>男性</option>
+                    <option value="2" @if( request('gender')==2 ) selected @endif>女性</option>
+                    <option value="3" @if( request('gender')==3 ) selected @endif>その他</option>
+                </select>
+            </div>
+            <div class="search-form__category">
+                <select class="search-form__category-select" name="category_id">
+                    <option disabled selected>お問い合わせの種類</option>
+                    @foreach($categories as $category)
+                    <option value="{{ $category->id }}" @if( request('category_id')==$category->id ) selected @endif
+                        >{{$category->content }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+            <input class="search-form__date" type="date" name="date" value="{{request('date')}}">
+            <div class="search-form__actions">
+                <input class="search-form__search-btn btn" type="submit" value="検索">
+                <input class="search-form__reset-btn btn" type="submit" value="リセット" name="reset">
+            </div>
+        </form>
 
-            </select>
-            <select class="search-form__item-select" name="Category_id">
-                <option value="">お問い合わせの種類</option>
-                <option value="商品のお届けについて">商品のお届けについて</option>
-                <option value="商品の交換について">商品の交換について</option>
-                <option value=" 商品トラブル"> 商品トラブル</option>
-                <option value="ショップへのお問い合わせ">ショップへのお問い合わせ</option>
-                <option value="その他">その他</option>
-            </select>
-            <form>
-                <input type="date" name='date'>
+        <div class="export-form">
+            <form action="{{'/export?'.http_build_query(request()->query())}}" method="post">
+                @csrf
+                <input class="export__btn btn" type="submit" value="エクスポート">
             </form>
-            </select>
-            <div class="search-form__button">
-                <button class="search-form__button-submit" type="submit">検索</button>
-            </div>
-            <div class="search-form__button">
-                <button class="search-form__button-reset" type="submit">リセット</button>
-            </div>
-            <div class="search-form__button">
-                <button class="search-form__button-export" type="submit">エクスポート</button>
-            </div>
-
-            <div class="category-table">
-                <table class="category-table__inner"></table>
-                <tr class=" category-table__row">
-                    <th class="category-table__header">お名前</th>
-                </tr>
-                <tr class="category-table__row">
-                    <td class="category-table__item">
-                        <form class="update-form" action="/admin/update" method="post">
-                            @method('PATCH')
-                            @csrf
-                            <div class="update-form__item">
-                                <input class="update-form__item-input" type="text" name="name" value="">
-                                <inpuut type="hidden" name="id" value="">
-                            </div>
-
-                    </td>
-                </tr>
-                <tr class=" category-table__row">
-                    <th class="category-table__header">性別</th>
-                </tr>
-                <tr class="category-table__row">
-                    <td class="category-table__item">
-                        <form class="update-form" action="/admin/update" method="post">
-                            @method('PATCH')
-                            @csrf
-                            <div class="update-form__item">
-                                <input class="update-form__item-input" type="text" name="gender" value="">
-                                <inpuut type="hidden" name="id" value="">
-                            </div>
-                    </td>
-                </tr>
-                <tr class=" category-table__row">
-                    <th class="category-table__header">メールアドレス</th>
-                </tr>
-                <tr class="category-table__row">
-                    <td class="category-table__item">
-                        <form class="update-form" action="/admin/update" method="post">
-                            @method('PATCH')
-                            @csrf
-                            <div class="update-form__item">
-                                <input class="update-form__item-input" type="text" name="email" value="">
-                                <inpuut type="hidden" name="id" value="">
-                            </div>
-                    </td>
-                </tr>
-                <tr class=" category-table__row">
-                    <th class="category-table__header">お問い合わせの種類</th>
-                </tr>
-                <tr class="category-table__row">
-                    <td class="category-table__item">
-                        <form class="update-form" action="/admin/update" method="post">
-                            @method('PATCH')
-                            @csrf
-                            <div class="update-form__item">
-                                <input class="update-form__item-input" type="text" name="kind" value="">
-                                <inpuut type="hidden" name="id" value="">
-                            </div>
-                    </td>
-                </tr>
-            </div>
+            {{ $contacts->appends(request()->query())->links('vendor.pagination.custom') }}
         </div>
+
+        <table class="admin__table">
+            <tr class="admin__row">
+                <th class="admin__label">お名前</th>
+                <th class="admin__label">性別</th>
+                <th class="admin__label">メールアドレス</th>
+                <th class="admin__label">お問い合わせの種類</th>
+                <th class="admin__label"></th>
+            </tr>
+            @foreach($contacts as $contact)
+            <tr class="admin__row">
+                <td class="admin__data">{{$contact->first_name}}{{$contact->last_name}}</td>
+                <td class="admin__data">
+                    @if($contact->gender == 1)
+                    男性
+                    @elseif($contact->gender == 2)
+                    女性
+                    @else
+                    その他
+                    @endif
+                </td>
+                <td class="admin__data">{{$contact->email}}</td>
+                <td class="admin__data">{{$contact->category->content}}</td>
+                <td class="admin__data">
+                    <a class="admin__detail-btn" href="#{{$contact->id}}">詳細</a>
+                </td>
+            </tr>
+
+            <div class="modal" id="{{$contact->id}}">
+                <a href="#!" class="modal-overlay"></a>
+                <div class="modal__inner">
+                    <div class="modal__content">
+                        <form class="modal__detail-form" action="/delete" method="post">
+                            @csrf
+                            <div class="modal-form__group">
+                                <label class="modal-form__label" for="">お名前</label>
+                                <p>{{$contact->first_name}}{{$contact->last_name}}</p>
+                            </div>
+
+                            <div class="modal-form__group">
+                                <label class="modal-form__label" for="">性別</label>
+                                <p>
+                                    @if($contact->gender == 1)
+                                    男性
+                                    @elseif($contact->gender == 2)
+                                    女性
+                                    @else
+                                    その他
+                                    @endif
+                                </p>
+                            </div>
+
+                            <div class="modal-form__group">
+                                <label class="modal-form__label" for="">メールアドレス</label>
+                                <p>{{$contact->email}}</p>
+                            </div>
+
+                            <div class="modal-form__group">
+                                <label class="modal-form__label" for="">電話番号</label>
+                                <p>{{$contact->tell}}</p>
+                            </div>
+
+                            <div class="modal-form__group">
+                                <label class="modal-form__label" for="">住所</label>
+                                <p>{{$contact->address}}</p>
+                            </div>
+
+                            <div class="modal-form__group">
+                                <label class="modal-form__label" for="">お問い合わせの種類</label>
+                                <p>{{$contact->category->content}}</p>
+                            </div>
+
+                            <div class="modal-form__group">
+                                <label class="modal-form__label" for="">お問い合わせ内容</label>
+                                <p>{{$contact->detail}}</p>
+                            </div>
+                            <input type="hidden" name="id" value="{{ $contact->id }}">
+                            <input class="modal-form__delete-btn btn" type="submit" value="削除">
+
+                        </form>
+                    </div>
+
+                    <a href="#" class="modal__close-btn">×</a>
+                </div>
+            </div>
+            @endforeach
+        </table>
+    </div>
+</div>
+
 </div>
 @endsection

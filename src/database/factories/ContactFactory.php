@@ -15,15 +15,15 @@ class ContactFactory extends Factory
     public function definition()
     {
         return [
-            'category_id' => '1',
-            'last_name' => '山田',
-            'first_name' => '太郎',
-            'gender' => '1',
-            'email' => 'text@example.com',
-            'tel' => '080-1234-5678',
-            'address' => '東京都渋谷区千駄ヶ谷1-2-3', 
-            'building' => '千駄ヶ谷マンション101',
-            'detail' => '届いた商品が注文した商品ではありませんでした。商品の交換をお願いします'
+            'category_id' => $this->faker->numberBetween(1,5),
+            'last_name' => $this->faker->last_Name(),
+            'first_name' => $this->faker->first_Name(),
+            'gender' => $this->faker->randomElement([1, 2, 3]),
+            'email' => $this->faker->safeEmail(),
+            'tel' => $this->faker->phoneNumber(),
+            'address' => $this->faker->city() . $this->faker->streerAddress(), 
+            'building' => $this->faker->secondaryAddress(),
+            'detail' => $this->faker->text(120),
         ];
     }
 }

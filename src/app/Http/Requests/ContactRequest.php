@@ -28,9 +28,12 @@ class ContactRequest extends FormRequest
             'first_name' => ['required'],
             'gender' => ['required'],
             'email' => ['required', 'email'],
-            'tel' => ['required', 'max:5'],
+            'tel_1' => ['required', 'max:5', 'regex:/^[0-9]+$/'],
+            'tel_2' => ['required', 'max:5', 'regex:/^[0-9]+$/'],
+            'tel_3' => ['required', 'max:5', 'regex:/^[0-9]+$/'],
             'address' => ['required'],
             'building' => ['required'],
+            'category' => ['required'],
             'detail' => ['required', 'max:120'],
         ];
     }
@@ -42,12 +45,17 @@ class ContactRequest extends FormRequest
             'gender.required' => '性別を選択してください',
             'email.required' => 'メールアドレスを入力してください',
             'email.email' => 'メールアドレスはメール形式で入力してください',
-            'tel.required' => '電話番号を入力してください',
-            'tel.max:5' => '電話番号は5桁までの数字で入力してください',
+            'tel1.required' => '電話番号を入力してください',
+            'tel1.max' => '電話番号は5桁までの数字で入力してください',
+            'tel2.required' => '電話番号を入力してください',
+            'tel2.max' => '電話番号は5桁までの数字で入力してください',
+            'tel3.required' => '電話番号を入力してください',
+            'tel3.max' => '電話番号は5桁までの数字で入力してください',
             'address.required' => '住所を入力してください',
             'building.required' => '建物名を入力してください',
+            'category.required' => 'お問い合わせの種類を選択してください',
             'detail.required' => 'お問い合わせ内容を入力してください', 
-            'detail.max:20' => 'お問い合わせ内容は120文字以内で入力してください',
+            'detail.max' => 'お問い合わせ内容は120文字以内で入力してください',
         ];
     }
 }

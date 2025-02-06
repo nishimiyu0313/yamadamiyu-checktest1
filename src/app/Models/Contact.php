@@ -20,4 +20,21 @@ class Contact extends Model
         'building',
         'detail'
     ];
+
+    public static $rules = array(
+            'last_name' => 'required',
+            'first_name' => 'required',
+            'gender' => 'required',
+            'email' => 'required'|'email',
+            'tel' => 'required'|'max:5',
+            'address' => 'required',
+            'building' => 'required',
+            'detail' => 'required'|'max:120',
+    );
+    public function getDetail()
+    {
+        
+    }
+
+    
 }

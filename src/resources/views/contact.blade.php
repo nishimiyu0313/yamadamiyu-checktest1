@@ -152,7 +152,6 @@
                 </p>
             </div>
             <input class="contact-form__btn btn" type="submit" value="確認画面">
-            {{ dd($errors->all()) }}
         </form>
     </div>
 </div>

@@ -4,37 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Contact extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'category_id',
-        'last_name',
-        'first_name',
-        'gender',
-        'email',
-        'tel',
-        'address',
-        'building',
-        'detail'
+    protected $guarded = [
+        'id',   
     ];
 
-    public static $rules = array(
-            'last_name' => 'required',
-            'first_name' => 'required',
-            'gender' => 'required',
-            'email' => 'required'|'email',
-            'tel' => 'required'|'max:5',
-            'address' => 'required',
-            'building' => 'required',
-            'detail' => 'required'|'max:120',
-    );
-    public function getDetail()
+    public function category()
     {
-        
+        return $this->belongsTo(Category::class);
     }
-
-    
+        
 }

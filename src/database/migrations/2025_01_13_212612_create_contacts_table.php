@@ -24,6 +24,7 @@ class CreateContactsTable extends Migration
             $table->string('address');
             $table->string('building');
             $table->text('detail');
+            $table->string('image');
             $table->timestamps();
         });
     }

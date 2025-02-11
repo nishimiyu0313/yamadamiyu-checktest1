@@ -23,6 +23,7 @@ class ContactController extends Controller
     //   dd($request->all());  
         $contacts = $request->all();
         $category = Category::find($request->category_id);
+        $contacts['image'] = $request->image->store('img', 'public');
         return view('confirm', compact('contacts', 'category'));
     }
     public  function store(ContactRequest $request)

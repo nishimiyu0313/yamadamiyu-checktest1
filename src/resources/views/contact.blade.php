@@ -2,15 +2,17 @@
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/contact.css')}}">
+<img src={{ '/storage/' . $contact['image'] }}’>
+
 @endsection
 
 @section('content')
 <div class="contact-form">
     <h2 class="contact-form__heading content__heading">Contact</h2>
     <div class="contact-form__inner">
-        <form action="/confirm" method="post">
+        <form action="/confirm" method="post" enctype="multipart/form-data">
             @csrf
-            <div class="contact-form__group contact-form__name-group">
+            <div class=" contact-form__group contact-form__name-group">
                 <label class="contact-form__label" for="name">
                     お名前<span class="contact-form__required">※</span>
                 </label>
@@ -151,6 +153,8 @@
                     @enderror
                 </p>
             </div>
+            <input type="file" name="image" id="image"
+                value="{{ old('image') }} ">
             <input class="contact-form__btn btn" type="submit" value="確認画面">
         </form>
     </div>
